@@ -111,7 +111,7 @@ class CloseApproach:
         # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
         # You should coerce these values to their appropriate data type and handle any edge cases.
         # The `cd_to_datetime` function will be useful.
-        self._designation = designation
+        self.designation = designation
         self.time = cd_to_datetime(time)
         self.distance = distance
         self.velocity = velocity
@@ -132,9 +132,6 @@ class CloseApproach:
         formatted string that can be used in human-readable representations and
         in serialization to CSV and JSON files.
         """
-        # TODO: Use this object's `.time` attribute and the `datetime_to_str` function to
-        # build a formatted representation of the approach time.
-        # TODO: Use self.designation and self.name to build a fullname for this object.
         formatted_time = datetime_to_str(self.time)
         return f"{formatted_time}, '{self.neo.fullname}'"
 
@@ -157,10 +154,8 @@ class CloseApproach:
 
     #Create JSON serializable object
     def serialize(self):
-        """Return a dictionary representation of this object."""
         return {
-            "designation": self.designation,
-            "time": datetime_to_str(self.time),
+            "datetime_utc": datetime_to_str(self.time),
             "distance_au": self.distance,
             "velocity_km_s": self.velocity,
         }

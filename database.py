@@ -47,8 +47,8 @@ class NEODatabase:
 
         for approach in self._approaches:
             assert approach.neo is None
-            if approach._designation in self._designation_to_neo:
-                neo = self._designation_to_neo[approach._designation]
+            if approach.designation in self._designation_to_neo:
+                neo = self._designation_to_neo[approach.designation]
                 approach.neo = neo
                 neo.approaches.append(approach)
 
