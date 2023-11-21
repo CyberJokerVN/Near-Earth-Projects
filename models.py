@@ -32,28 +32,29 @@ class NearEarthObject:
     initialized to an empty collection, but eventually populated in the
     `NEODatabase` constructor.
     """
-    # TODO: How can you, and should you, change the arguments to this constructor?
-    # If you make changes, be sure to update the comments in this file.
-    def __init__(self, **info):
+
+    def __init__(self, designation, hazardous, name, diameter):
         """Create a new `NearEarthObject`.
 
-        :param info: A dictionary of excess keyword arguments supplied to the constructor.
+        :param designation: designation of the object.
+        :param hazardous: Boolean indicating whether the object is hazardous or not.
+        :param name: Name of the object.
+        :param diameter: Diameter of the object.
         """
-        # TODO: Assign information from the arguments passed to the constructor
         # onto attributes named `designation`, `name`, `diameter`, and `hazardous`.
         # You should coerce these values to their appropriate data type and
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
-        self.designation = info.get('designation')
-        self.name = info.get('name')
-        self.diameter = float(info.get('diameter', float('nan'))) if info.get('diameter') else None
-        self.hazardous = info.get('hazardous', False)
+
+        self.designation = designation
+        self.name = name if name else None
+        self.diameter = float(diameter) if diameter else float('nan')
+        self.hazardous = hazardous
         self.approaches = []
 
     @property
     def fullname(self):
         """Return a representation of the full name of this NEO."""
-        # TODO: Use self.designation and self.name to build a fullname for this object.
         if self.name:
             return f'{self.designation} ({self.name})'
         else:
@@ -61,10 +62,9 @@ class NearEarthObject:
 
     def __str__(self):
         """Return `str(self)`."""
-        # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
         # method for examples of advanced string formatting.
-        return(
+        return (
             f"NearEarthObject(designation={self.designation!r}, "
             f"name={self.name!r}, diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
         )
@@ -76,7 +76,7 @@ class NearEarthObject:
             f"name={self.name!r}, diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
         )
 
-    #Create JSON serializable object
+    # Create JSON serializable object
     def serialize(self):
         """Return a dictionary representation of this object."""
         return {
@@ -100,21 +100,14 @@ class CloseApproach:
     private attribute, but the referenced NEO is eventually replaced in the
     `NEODatabase` constructor.
     """
-    # TODO: How can you, and should you, change the arguments to this constructor?
-    # If you make changes, be sure to update the comments in this file.
-    def __init__(self, **info):
-        """Create a new `CloseApproach`.
 
-        :param info: A dictionary of excess keyword arguments supplied to the constructor.
-        """
-        # TODO: Assign information from the arguments passed to the constructor
-        # onto attributes named `_designation`, `time`, `distance`, and `velocity`.
-        # You should coerce these values to their appropriate data type and handle any edge cases.
-        # The `cd_to_datetime` function will be useful.
-        self.designation = info.get('designation')
-        self.time = cd_to_datetime(info.get('time'))
-        self.distance = float(info.get('distance', 0.0))
-        self.velocity = float(info.get('velocity', 0.0))
+    def __init__(self, designation, time, distance, velocity):
+        self.designation = designation
+        self.time = cd_to_datetime(time)
+        self.distance = distance
+        self.velocity = velocity
+
+        # Create an attribute for the referenced NEO, originally None.
         self.neo = None
 
     @property
@@ -130,9 +123,6 @@ class CloseApproach:
         formatted string that can be used in human-readable representations and
         in serialization to CSV and JSON files.
         """
-        # TODO: Use this object's `.time` attribute and the `datetime_to_str` function to
-        # build a formatted representation of the approach time.
-        # TODO: Use self.designation and self.name to build a fullname for this object.
         formatted_time = datetime_to_str(self.time)
         return f"{formatted_time}, '{self.neo.fullname}'"
 
@@ -153,12 +143,10 @@ class CloseApproach:
             f"velocity={self.velocity:.2f}, neo={self.neo!r})"
         )
 
-    #Create JSON serializable object
+    # Create JSON serializable object
     def serialize(self):
-        """Return a dictionary representation of this object."""
         return {
-            "designation": self.designation,
-            "time": datetime_to_str(self.time),
+            "datetime_utc": datetime_to_str(self.time),
             "distance_au": self.distance,
             "velocity_km_s": self.velocity,
         }
