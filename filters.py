@@ -72,47 +72,157 @@ class AttributeFilter:
 
     def __repr__(self):
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
-
-
 class DateFilter(AttributeFilter):
+    """
+    A filter for CloseApproaches based on the date of the approach.
+
+    Attributes:
+        - AttributeFilter: The base class for attribute filters.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the date attribute from the CloseApproach.
+
+        Parameters:
+            - approach (CloseApproach): The CloseApproach instance.
+
+        Returns:
+            - datetime.date: The date of the CloseApproach.
+        """
         return approach.time.date()
 
 
 class DistanceMinFilter(AttributeFilter):
+    """
+    A filter for CloseApproaches based on the minimum distance.
+
+    Attributes:
+        - AttributeFilter: The base class for attribute filters.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the distance attribute from the CloseApproach.
+
+        Parameters:
+            - approach (CloseApproach): The CloseApproach instance.
+
+        Returns:
+            - float: The distance of the CloseApproach.
+        """
         return approach.distance
 
 
 class DistanceMaxFilter(AttributeFilter):
+    """
+    A filter for CloseApproaches based on the maximum distance.
+
+    Attributes:
+        - AttributeFilter: The base class for attribute filters.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the distance attribute from the CloseApproach.
+
+        Parameters:
+            - approach (CloseApproach): The CloseApproach instance.
+
+        Returns:
+            - float: The distance of the CloseApproach.
+        """
         return approach.distance
 
 
 class VelocityMinFilter(AttributeFilter):
+    """
+    A filter for CloseApproaches based on the minimum velocity.
+
+    Attributes:
+        - AttributeFilter: The base class for attribute filters.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the velocity attribute from the CloseApproach.
+
+        Parameters:
+            - approach (CloseApproach): The CloseApproach instance.
+
+        Returns:
+            - float: The velocity of the CloseApproach.
+        """
         return approach.velocity
 
 
 class VelocityMaxFilter(AttributeFilter):
+    """
+    A filter for CloseApproaches based on the maximum velocity.
+
+    Attributes:
+        - AttributeFilter: The base class for attribute filters.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the velocity attribute from the CloseApproach.
+
+        Parameters:
+            - approach (CloseApproach): The CloseApproach instance.
+
+        Returns:
+            - float: The velocity of the CloseApproach.
+        """
         return approach.velocity
 
 
 class DiameterFilter(AttributeFilter):
+    """
+    A filter for CloseApproaches based on the diameter of the NEO.
+
+    Attributes:
+        - AttributeFilter: The base class for attribute filters.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the diameter attribute from the NEO associated with the CloseApproach.
+
+        Parameters:
+            - approach (CloseApproach): The CloseApproach instance.
+
+        Returns:
+            - float: The diameter of the NEO.
+        """
         return approach.neo.diameter
 
 
 class HazardousFilter(AttributeFilter):
+    """
+    A filter for CloseApproaches based on the hazardous status of the NEO.
+
+    Attributes:
+        - AttributeFilter: The base class for attribute filters.
+    """
+
     @classmethod
     def get(cls, approach):
+        """
+        Get the hazardous attribute from the NEO associated with the CloseApproach.
+
+        Parameters:
+            - approach (CloseApproach): The CloseApproach instance.
+
+        Returns:
+            - bool: The hazardous status of the NEO.
+        """
         return approach.neo.hazardous
 
 
